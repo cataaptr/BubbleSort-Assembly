@@ -1,0 +1,168 @@
+.model small
+.stack 200h
+.data 
+
+message db "Introduceti numarul de numere:", 10, '$'
+message2 db "Introduceti cate un numar, fiecare separat prin tasta enter:", 10, '$'
+num dw 0
+numarElemente dw 0
+flag db 0
+i dw 0
+aux dw 0
+aux2 dw 0
+vector dw 0
+
+.code
+	afisareNumar macro n
+		mov ax, n
+		mov cx, 0
+		mov bx, 10
+		cmp ax, 0
+		js numarNegativ
+
+		descompunere:
+			mov dx, 0
+			div bx
+			push dx
+			inc cx
+			cmp ax, 0
+			je amTerminatDescompunerea
+			jmp descompunere
+
+		amTerminatDescompunerea:
+			afiseaza:
+				pop dx
+				add dx, 30h
+				mov ah, 02h
+				int 21h
+			loop afiseaza
+            jmp finish
+
+        numarNegativ:
+			mov bx, ax 
+			mov dl, 45
+			mov ah, 02h
+			int 21h
+			dec bx
+			mov ax, 65535
+			sub ax, bx
+			mov bx, 10
+			jmp descompunere
+
+		finish:
+			mov dx, 32
+			mov ah, 02h
+			int 21h
+			;add si, 2
+	endm
+
+	citireNumar proc
+	    mov bh, 0
+		mov di, 10
+		mov num, 0
+		mov flag, 0
+		citireTasta:
+			mov ah, 01h
+			int 21h
+
+			cmp al, 13
+			je amTerminat
+			cmp al, 45
+			je setareNegativ
+			sub al, 48
+			mov bl, al
+			mov ax, 0
+			mov ax, num
+			mul di
+			add ax, bx
+			mov num, ax
+			jmp citireTasta
+		setareNegativ:
+			mov flag, 1
+			jmp citireTasta
+
+		amTerminat:
+			cmp flag, 1
+			je negativ
+			jmp terminareProgram
+
+		negativ:
+			mov ax, num
+			dec ax
+			mov num, 65535
+			sub num, ax
+
+		terminareProgram:
+			ret	
+	endp
+
+	start:
+		mov ax, @data
+		mov ds, ax
+
+		mov dx, offset message
+		mov ah, 09h
+		int 21h
+
+		call citireNumar
+		mov cx, num
+		mov numarElemente, cx
+		
+		mov dx, offset message2
+		mov ah, 09h
+		int 21h
+
+		mov si, 0
+		citire:
+			call citireNumar
+			mov ax, num
+			mov [vector + si], ax
+			add si, 2
+		loop citire
+
+		mov cx, numarElemente
+		add cx, cx
+		sub cx, 2; limita unde se va opri i
+		mov dx, cx; limita unde se va opri j
+		mov bx, 0; echivalent j din C++
+		bubbleSort:
+			loopPentruI:
+				cmp i, cx
+				jge amTerminatSortarea
+				mov bx, 0
+				loopPentruJ:
+					cmp bx, dx
+					je scadereLimita
+						mov ax, [vector + bx]
+						cmp ax, [vector + bx + 2]
+						jg interschimbare
+					add bx, 2
+					jmp loopPentruJ
+					scadereLimita:
+						sub dx, 2
+						add i, 2
+						jmp loopPentruI
+					interschimbare:
+						mov aux, ax
+						mov ax, [vector + bx + 2]
+						mov aux2, ax
+						mov [vector + bx], ax
+						mov ax, aux
+						mov [vector + bx + 2], ax
+						add bx, 2
+					jmp loopPentruJ
+
+		amTerminatSortarea:
+			mov di, numarElemente
+			mov si, 0
+			afis:
+				mov ax, [vector + si]
+				afisareNumar ax
+				add si, 2
+				dec di
+				cmp di, 0
+				jg afis
+
+		mov ah, 4ch
+		int 21h
+	end start
