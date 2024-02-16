@@ -2,7 +2,7 @@
 
 This is a project written in Assembly model X86 that sorts using the Bubble Sort algorithm, a string of negative and positive numbers, the numbers being stored on 16 bits.
 
-# 🥿 Steps
+# 📌 Steps
 1. Prompts the user to enter a number of numbers
 2. Reads the number of numbers and stores them in a vector
 3. Sort the vector using the Bubblesort sorting algorithm
