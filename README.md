@@ -1,3 +1,18 @@
-# BubbleSort-Assembly
-X86 model
-I sorted a string of numbers entered from the keyboard, negative numbers can also be entered, program written on 16 bits.
+# 🎯 Bubble Sort
+
+This is a project written in Assembly model X86 that sorts using the Bubble Sort algorithm, a string of negative and positive numbers, the numbers being stored on 16 bits.
+
+# 🥿 Steps
+1. Prompts the user to enter a number of numbers
+2. Reads the number of numbers and stores them in a vector
+3. Sort the vector using the Bubblesort sorting algorithm
+4. Show sorted numbers
+   
+# 💭 What I learned
+- Handling flags and registers
+- Using macros
+- Manipulation of integers
+- Programming at the system level
+
+# 🔍 Known Issues
+- Validation of Entry Data
