@@ -1,4 +1,4 @@
-# 🎯 Bubble Sort
+# 🧮 Bubble Sort
 
 This is a project written in Assembly model X86 that sorts using the Bubble Sort algorithm, a string of negative and positive numbers, the numbers being stored on 16 bits.
 
@@ -8,7 +8,7 @@ This is a project written in Assembly model X86 that sorts using the Bubble Sort
 3. Sort the vector using the Bubblesort sorting algorithm
 4. Show sorted numbers
    
-# 💭 What I learned
+# 🎯 What I learned
 - Handling flags and registers
 - Using macros
 - Manipulation of integers
