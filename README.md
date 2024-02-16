@@ -7,6 +7,11 @@ This is a project written in Assembly model X86 that sorts using the Bubble Sort
 2. Reads the number of numbers and stores them in a vector
 3. Sort the vector using the Bubblesort sorting algorithm
 4. Show sorted numbers
+
+ # 🔧 What I used
+ - Assembly X86
+ - Notepad++ and DOSBOX
+ - Sorting Algorithm
    
 # 🎯 What I learned
 - Handling flags and registers
